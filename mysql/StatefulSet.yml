@@ -1,0 +1,42 @@
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: mysql-statefulset
+  namespace: mysql
+spec: 
+  serviceName: mysql-service  # Attached to the service
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mysql
+  template:  # This should be here, directly under `spec`
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:5.7
+        ports:
+          - containerPort: 3306
+        env:  # Environment Variables   
+          - name: MYSQL_ROOT_PASSWORD
+            value: root
+          - name: MYSQL_DATABASE
+            value: mysql-demo-database
+
+        # Adding VolumeMounts
+        volumeMounts:
+          - mountPath: /var/lib/mysql
+            name: mysql-data
+
+      # Adding Volumes
+  volumeClaimTemplates:
+    - metadata:
+        name: mysql-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 2Gi
+       # storageClassName: local-storage #Optional as we use local-storage
