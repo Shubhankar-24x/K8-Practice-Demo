@@ -21,9 +21,21 @@ spec:
           - containerPort: 3306
         env:  # Environment Variables   
           - name: MYSQL_ROOT_PASSWORD
-            value: root
+            valueFrom:
+              secretKeyRef:
+                name: mysql-secret # This value comes from Secret
+                key: MYSQL_ROOT_PASSWORD # This value comes from Secret
+
+         # This is Hardcoded value, if we want to make it dynamic we can use ConfigMap   
+         # - name: MYSQL_DATABASE
+          #  value: mysql-demo-database
+
+          # Value comes from ConfigMap configuration
           - name: MYSQL_DATABASE
-            value: mysql-demo-database
+            valueFrom:
+              configMapKeyRef:
+                name: mysql-configmap
+                key: MYSQL_DATABASE # This value comes from Configmap data
 
         # Adding VolumeMounts
         volumeMounts:

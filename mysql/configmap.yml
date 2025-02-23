@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-configmap
+  namespace: mysql
+data:
+  MYSQL_DATABASE: mysql-demo-database  # This is a key value pair
