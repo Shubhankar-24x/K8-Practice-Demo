@@ -39,4 +39,4 @@ spec:
         resources:
           requests:
             storage: 2Gi
-       # storageClassName: local-storage #Optional as we use local-storage
+       # storageClassName: local-storage #Optional as we use local-storageu
