@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  namespace: nginx
+  annotations:    # adding annotations for specific application service configuration
+    nginx.ingress.kubernetes.io/rewrite-target: /  # This will redirect to specific target
+spec:
+  rules:
+    - http:
+        paths:
+        - pathType: Prefix
+          path: "/nginx"
+          backend:
+            service:
+              name: nginx-service
+              port: 
+                number: 80
+        
+        # 2nd application
+        - pathType: Prefix
+          path: "/app2"
+          backend:
+            service:
+              name: app2-service
+              port: 
+                number: 8000
