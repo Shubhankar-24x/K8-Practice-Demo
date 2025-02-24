@@ -1,0 +1,21 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: apache-hpa
+  namespace: apache
+spec:
+  scaleTargetRef:
+  # Reference to the Deployment Config
+    apiVersion: apps/v1
+    kind: Deployment
+    name: apache-deployment
+  minReplicas: 1
+  maxReplicas: 3
+  # Defining the metrics
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50   # If 50% of CPU usage then it will create 3 more pods
