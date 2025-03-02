@@ -1,0 +1,12 @@
+# This is for custom resource
+
+kind: DevOpsDemo
+apiVersion: devops.com/v1 # Group name from CRD
+metadata:
+  name: devops-practice-demo
+spec:
+# using the defined properties(CRD Properties)
+  name: devops-practice
+  duration: 10 months
+  platform: aws
+  mode: online
